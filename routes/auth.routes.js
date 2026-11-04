@@ -22,11 +22,21 @@ router.post("/sign-up", async (req, res) => {
   const hashedPassword = bcrypt.hashSync(req.body.password, 10);
   req.body.password = hashedPassword;
 
+  if (req.body.isDoctor === 'on') {
+    req.body.isDoctor = true
+  }
+  else {req.body.isDoctor = false}
+
   // validation logic
 
-  const user = await User.create(req.body);
+  const user = await User.create({
+    username: req.body.username,
+    password: req.body.password,
+    doctor: req.body.isDoctor
+  });
   res.redirect("/auth/sign-in");
 });
+
 
 
 
@@ -58,7 +68,8 @@ router.post("/sign-in", async (req, res) => {
   // If there is other data you want to save to `req.session.user`, do so here!
   req.session.user = {
     username: userInDatabase.username,
-    _id: userInDatabase._id
+    _id: userInDatabase._id,
+    doctor: userInDatabase.doctor
   };
 
   res.redirect("/");
@@ -69,9 +80,6 @@ router.get("/sign-out", (req, res) => {
   req.session.destroy();
   res.redirect("/");
 });
-
-
-
 
 
 module.exports = router;

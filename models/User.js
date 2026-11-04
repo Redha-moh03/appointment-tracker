@@ -11,15 +11,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  Doctor : {
+  doctor : {
     type:Boolean,
-    required:true,
-    default:false,
+    required:true
   },
-  department:{
+  department:[{
     type: mongoose.Schema.Types.ObjectId,
     ref:"Department"
-  }
+  }]
 }, {timestamps: true});
 
 const User = mongoose.model("User", userSchema);

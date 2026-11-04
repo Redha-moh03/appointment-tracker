@@ -6,18 +6,6 @@ const departmentSchema = new mongoose.Schema({
     required: true,
     maxLength:40,
     trim: true
-  },
-  doctorDepartment:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref:"Department"
-  },
-  doctorName:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref:"User"
-  },
-  appointmentOwner:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref:"User"
   }
 }, {timestamps: true});
 

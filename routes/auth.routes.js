@@ -25,7 +25,7 @@ router.post("/sign-up", async (req, res) => {
   if (req.body.isDoctor === 'on') {
     req.body.isDoctor = true
   }
-  else {req.body.isDoctor = false}
+  else { req.body.isDoctor = false }
 
   // validation logic
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book an appointment</title>
+</head>
+
+<body>
+  <%- include('../partials/navbar') %>
+
+  Book an appointment
+  <form action="/book/new" method="post">
+    <label for="department">Choose a department</label>
+    <select id="department" name="department">
+      <option value="dental">dental</option>
+      <option value="diabetes">diabetes</option>
+      <option value="physiotherapy">physiotherapy</option>
+      <option value="oncology">oncology</option>
+    </select>
+
+    <label for="doctor">Doctor: </label>
+    <select name="doctor" id="doctor">
+      <% doctor.forEach(doctor => { %>
+      <option value="<%= doctor._id %>"><%= doctor.username %></option>
+      <% }) %>
+    </select>
+    <label for="date">date</label>
+    <input type="date" id="date" name="date" min="2026-11-04" max="2030-12-31">
+    <label for="startTime">Choose a time</label>
+    <input name="startTime" id="startTime" min="07:00" max="21:00" step="1800" type="time" />
+    <button>Book an appointment</button>
+  </form>
+</body>
+
+</html>

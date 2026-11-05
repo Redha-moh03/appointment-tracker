@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My appointment</title>
+</head>
+
+<body>
+    <%- include('./partials/navbar') %>
+
+    <p>my appointment </p>
+    <% for (let oneAppointment of myAppointment) {%>
+    <p><%= oneAppointment.doctorName.username %></p>
+    <a href="/details/<%= oneAppointment._id %>">See details</a>
+    <% } %>
+</body>
+
+</html>

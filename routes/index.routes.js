@@ -35,7 +35,6 @@ router.put('/edit/:appointmentId', isSignedIn, async (req, res) => {
         department: req.body.department,
         owner: req.session.user._id
     })
-
     res.redirect('/')
 })
 module.exports = router;

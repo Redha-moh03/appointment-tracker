@@ -8,6 +8,8 @@
 </head>
 
 <body>
+    <%- include('./partials/navbar') %>
+
     <h1>Edit appointment</h1>
 
     <form action="/edit/<%= appointment._id %>?_method=PUT" method="post">

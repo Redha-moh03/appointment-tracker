@@ -20,7 +20,6 @@ router.post('/new', isSignedIn, async (req, res) => {
         doctorReviewed: req.body.doctor,
         owner: req.session.user._id
     })
-    console.log(req.body.doctor._id,)
 })
 
 module.exports = router;

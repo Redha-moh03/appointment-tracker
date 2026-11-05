@@ -6,10 +6,21 @@ const isSignedIn = require("../middleware/is-signed-in")
 const Reviews = require('../models/Reviews')
 
 router.get('/new', isSignedIn, async (req, res) => {
-    res.render('/reviews/create.ejs')
+    const doctor = await User.find({ doctor: true })
+    res.render('reviews/create.ejs', { doctor: doctor })
 })
 router.post('/new', isSignedIn, async (req, res) => {
-    const newRview = await Reviews.create()
+    /*  console.log(req.body.doctor)
+     const findDoctor = await User.find({ username: req.body.doctor })
+     req.body.doctor = findDoctor */
+    const newRview = await Reviews.create({
+        title: req.body.title,
+        reviewBody: req.body.reviewBody,
+        rating: req.body.rating,
+        doctorReviewed: req.body.doctor,
+        owner: req.session.user._id
+    })
+    console.log(req.body.doctor._id,)
 })
 
 module.exports = router;

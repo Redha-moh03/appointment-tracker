@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Review your doctor</h1>
+    <form action="/reviews/new" method="post">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" maxlength="50" min="4" required>
+        <label for="reviewBody">review</label>
+        <input type="text" id="reviewBody" name="reviewBody" maxlength="500" required min="40">
+        <label for="rating">rating</label>
+        <input type="number" id="rating" name="rating" max="10" min="0" required>
+        <label for="doctor">Doctor: </label>
+        <select name="doctor" id="doctor">
+            <% doctor.forEach(doctor => { %>
+            <option value="<%= doctor._id %>"><%= doctor.username %></option>
+            <% }) %>
+        </select>
+        <button>Review</button>
+    </form>
+</body>
+
+</html>

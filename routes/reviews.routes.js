@@ -10,9 +10,6 @@ router.get('/new', isSignedIn, async (req, res) => {
     res.render('reviews/create.ejs', { doctor: doctor })
 })
 router.post('/new', isSignedIn, async (req, res) => {
-    /*  console.log(req.body.doctor)
-     const findDoctor = await User.find({ username: req.body.doctor })
-     req.body.doctor = findDoctor */
     const newRview = await Reviews.create({
         title: req.body.title,
         reviewBody: req.body.reviewBody,
@@ -21,5 +18,8 @@ router.post('/new', isSignedIn, async (req, res) => {
         owner: req.session.user._id
     })
 })
-
+router.get('/', async (req, res) => {
+    const reviews = await Reviews.find()
+    res.render('reviews/index.ejs', { reviews: reviews })
+})
 module.exports = router;

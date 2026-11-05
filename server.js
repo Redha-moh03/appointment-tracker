@@ -18,7 +18,7 @@ const passUserToView = require("./middleware/pass-user-to-view.js");
 const authController = require("./routes/auth.routes.js");
 const indexController = require("./routes/index.routes.js");
 const appointmentController = require('./routes/appointment.routes.js')
-
+const reviewsController = require('./routes/reviews.routes.js')
 
 // Middleware
 app.use(express.static('public')) // my app will serve all static files from public folder
@@ -49,20 +49,11 @@ app.use(passUserToView)
 
 
 
-
-
-
-
 // Routes go here
 app.use('/auth', authController)
 app.use('/', indexController)
 app.use('/book', appointmentController)
-
-
-
-
-
-
+app.use('/reviews', reviewsController)
 
 // connect to database and listen on Port 3000
 async function startServer() {

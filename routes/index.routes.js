@@ -14,4 +14,8 @@ router.get('/details/:appoitmentId', isSignedIn, async (req, res) => {
     const foundAppointment = await Appointment.findById(req.params.appoitmentId).populate('doctorName')
     res.render('details.ejs', { appointment: foundAppointment })
 })
+router.delete('/appointment/:appointmentId', async (req, res) => {
+    const deletedAppointment = await Appointment.findByIdAndDelete(req.params.appointmentId)
+    res.redirect('/')
+})
 module.exports = router;

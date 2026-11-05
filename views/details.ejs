@@ -12,10 +12,10 @@
     <p><%= appointment.doctorName.username %></p>
     <p><%= appointment.department %></p>
     <p><%= appointment.startTime %></p>
-    <form action="" method="post">
+    <form action="/appointment/<%=appointment._id%>?_method=DELETE" method="post">
         <button>Delete appointment</button>
     </form>
-
+    <a href="/edit/<%=appointment._id%>">edit your appointment</a>
 </body>
 
 </html>

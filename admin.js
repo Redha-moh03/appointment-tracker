@@ -12,17 +12,17 @@ async function createadmin() {
         await Department.updateOne({ departmentName }, { departmentName }, { upsert: true })
     }
 
-    if (User.findOne({ username: 'admin' })) {
+    if (!await User.findOne({ username: 'admin' })) {
         return
+        const hashedPassword = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 14)
+        await User.create({
+            username: process.env.ADMIN_USERNAME,
+            password: hashedPassword,
+            role: 'admin',
+            status: 'approved'
+        })
+        console.log('finshed')
+        mongoose.disconnect()
     }
-    const hashedPassword = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 14)
-    await User.create({
-        username: process.env.ADMIN_USERNAME,
-        password: hashedPassword,
-        role: 'admin',
-        status: 'approved'
-    })
-    console.log('finshed')
-    mongoose.disconnect()
 }
 createadmin()

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <%- include('../partials/navbar') %>
+    <p><%= review.title %></p>
+    <p><%= review.reviewBody %></p>
+    <p><%= review.rating %></p>
+    <p><%= review.owner.username %></p>
+    <p><%= review.doctorReviewed.username %></p>
+</body>
+
+</html>

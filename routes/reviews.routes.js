@@ -6,7 +6,7 @@ const isSignedIn = require("../middleware/is-signed-in")
 const Reviews = require('../models/Reviews')
 
 router.get('/new', isSignedIn, async (req, res) => {
-    const doctor = await User.find({ doctor: true })
+    const doctor = await User.find({ role: 'doctor', status: 'approved' })
     res.render('reviews/create.ejs', { doctor: doctor })
 })
 router.post('/new', isSignedIn, async (req, res) => {
@@ -17,9 +17,14 @@ router.post('/new', isSignedIn, async (req, res) => {
         doctorReviewed: req.body.doctor,
         owner: req.session.user._id
     })
+    res.redirect('/')
 })
 router.get('/', async (req, res) => {
     const reviews = await Reviews.find()
     res.render('reviews/index.ejs', { reviews: reviews })
+})
+router.get('/:reviewId', isSignedIn, async (req, res) => {
+    const foundReview = await Reviews.findById(req.params.reviewId).populate('owner').populate('doctorReviewed')
+    res.render('reviews/details.ejs', { review: foundReview })
 })
 module.exports = router;

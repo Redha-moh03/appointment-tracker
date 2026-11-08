@@ -11,9 +11,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  doctor: {
-    type: Boolean,
+  role: {
+    type: String,
+    enum: ['patient', 'admin', 'doctor'],
+    required: true,
+    default: 'patient'
+  },
+  status: {
+    type: String,
+    enum: ['approved', 'rejected', 'pending'],
+    default: 'approved',
     required: true
+
   },
   department: {
     type: mongoose.Schema.Types.ObjectId,

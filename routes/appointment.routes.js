@@ -5,7 +5,7 @@ const Department = require('../models/department')
 const isSignedIn = require("../middleware/is-signed-in")
 
 router.get('/', isSignedIn, async (req, res) => {
-    const doctor = await User.find({ doctor: true })
+    const doctor = await User.find({ role: 'doctor', status: 'approved' })
     res.render('book/book.ejs', { doctor: doctor })
 })
 

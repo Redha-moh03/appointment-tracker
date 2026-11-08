@@ -20,8 +20,8 @@ router.delete('/appointment/:appointmentId', isSignedIn, async (req, res) => {
     res.redirect('/')
 })
 router.get('/edit/:appointmentId', isSignedIn, async (req, res) => {
-    const editedAppointment = await Appointment.findByIde(req.params.appointmentId)
-    const doctor = await User.find({ doctor: true })
+    const editedAppointment = await Appointment.findById(req.params.appointmentId)
+    const doctor = await User.find({ role: 'doctor', status: 'approved' })
     res.render('edit-appointment.ejs', {
         appointment: editedAppointment,
         doctor: doctor

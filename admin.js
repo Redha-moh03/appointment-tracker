@@ -16,19 +16,15 @@ async function createadmin() {
     const adminInDatabase = await User.findOne({ username: process.env.ADMIN_USERNAME })
 
     if (adminInDatabase) {
-        console.log('admin already exists')
     } else {
-        const hashedPassword = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 10)
+        const hashedPassword = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 14)
         await User.create({
             username: process.env.ADMIN_USERNAME,
             password: hashedPassword,
             role: 'admin',
             status: 'approved'
         })
-        console.log('admin created')
     }
-
-    console.log('finished')
     await mongoose.disconnect()
 }
 createadmin()

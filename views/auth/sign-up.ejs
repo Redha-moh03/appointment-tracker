@@ -1,24 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up</title>
-  </head>
 
-  <body>
-    <%- include('../partials/navbar') %>
-    <h1>Create a new account!</h1>
-    <form action="/auth/sign-up" method="post">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" />
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" />
-      <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" name="confirmPassword" id="confirmPassword" />
-      <label for="isDoctor">are you a doctor?</label>
-      <input name="isDoctor" id="isDoctor" defult="false" type="checkbox" />
-      <button type="submit">Sign up</button>
-    </form>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+</head>
+
+<body>
+  <%- include('../partials/navbar') %>
+  <h1>Create a new account!</h1>
+  <form action="/auth/sign-up" method="post">
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" />
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" />
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" name="confirmPassword" id="confirmPassword" />
+    <input required name="role" id="role" defult="false" value="doctor" type="radio" />
+    <input required name="role" id="role" value="patient" type="radio">
+    <label for="department">Choose a department</label>
+    <select id="department" name="department">
+      <% for(let oneDepartment of department) {%>
+      <option value="<%= oneDepartment.departmentName %>"><% oneDepartment.departmentName %></option>
+      <% } %>
+    </select>
+    <button type="submit">Sign up</button>
+  </form>
+</body>
+
 </html>

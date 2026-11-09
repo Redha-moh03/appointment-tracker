@@ -2,11 +2,14 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User.js");
 const bcrypt = require("bcrypt");
+const Department = require('../models/department.js')
 
 
 // Sign up routes
-router.get("/sign-up", (req, res) => {
-  res.render("auth/sign-up.ejs");
+router.get("/sign-up", async (req, res) => {
+  const department = await Department.find().populate('departmentName')
+  console.log(department)
+  res.render("auth/sign-up.ejs", { department: department });
 });
 
 router.post("/sign-up", async (req, res) => {
@@ -26,8 +29,19 @@ router.post("/sign-up", async (req, res) => {
     req.body.isDoctor = true
   }
   else { req.body.isDoctor = false }
-
-  // validation logic
+  if (req.body.role === 'admin') {
+    return res.send("Cant do that")
+  }
+  console.log(req.body.role)
+  console.log(req.body.department)
+  if (req.body.role === 'doctor') {
+    const user = await User.create({
+      username: req.body.username,
+      password: req.body.password,
+      doctor: req.body.role,
+      department: req.body.department
+    });
+  }
 
   const user = await User.create({
     username: req.body.username,

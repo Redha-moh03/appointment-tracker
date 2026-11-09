@@ -12,14 +12,14 @@ const connectToDB = require('./db.js')
 // middleware imports
 const isSignedIn = require("./middleware/is-signed-in.js");
 const passUserToView = require("./middleware/pass-user-to-view.js");
-
+const isAdmin = require("./middleware/is-admin.js")
 
 // routes Imports
 const authController = require("./routes/auth.routes.js");
 const indexController = require("./routes/index.routes.js");
 const appointmentController = require('./routes/appointment.routes.js')
 const reviewsController = require('./routes/reviews.routes.js')
-
+const adminController = require('./routes/admin.routes.js')
 // Middleware
 app.use(express.static('public')) // my app will serve all static files from public folder
 app.use(express.urlencoded({ extended: false }));
@@ -54,7 +54,7 @@ app.use('/auth', authController)
 app.use('/', indexController)
 app.use('/book', appointmentController)
 app.use('/reviews', reviewsController)
-
+app.use('/admin', isAdmin, adminController)
 // connect to database and listen on Port 3000
 async function startServer() {
   const PORT = process.env.PORT || 3000;

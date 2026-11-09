@@ -23,30 +23,24 @@ router.post("/sign-up", async (req, res) => {
 
   const hashedPassword = bcrypt.hashSync(req.body.password, 10);
   req.body.password = hashedPassword;
-
-  if (req.body.isDoctor === 'on') {
-    req.body.isDoctor = true
-  }
-  else { req.body.isDoctor = false }
   if (req.body.role === 'admin') {
     return res.send("Cant do that")
   }
-  const roleId = await Department.find({ departmentName: req.body.department })
+  const departmentId = await Department.findOne({ departmentName: req.body.department })
   if (req.body.role === 'doctor') {
     const user = await User.create({
       username: req.body.username,
       password: req.body.password,
-      doctor: req.body.role,
-      department: roleId._id,
+      role: req.body.role,
+      department: departmentId._id,
       status: 'pending'
     });
   }
   else {
-
     const user = await User.create({
       username: req.body.username,
       password: req.body.password,
-      doctor: req.body.isDoctor
+      doctor: req.body.role
     });
   }
 
@@ -87,9 +81,8 @@ router.post("/sign-in", async (req, res) => {
   req.session.user = {
     username: userInDatabase.username,
     _id: userInDatabase._id,
-    doctor: userInDatabase.doctor
+    role: userInDatabase.role
   };
-
   res.redirect("/");
 });
 

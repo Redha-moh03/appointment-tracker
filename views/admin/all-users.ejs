@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <% for (let oneUser of users) {%>
+    <% if(oneUser.username !== 'admin') {%>
+    <p><%= oneUser.username %></p>
+    <p><%= oneUser.role %></p>
+    <% if(oneUser.role === 'doctor') {%>
+    <p><%= oneUser.department.departmentName %></p>
+    <p><%= oneUser.status %></p>
+    <form action="/admin/approve/<%= oneUser._id %>?_method=PUT" method="post">
+        <button>Approve</button>
+    </form>
+    <form action="/admin/reject/<%= oneUser._id %>?_method=PUT" method="post">
+        <button>Reject</button>
+    </form>
+    <% } %>
+    <% } %>
+    <% } %>
+</body>
+
+</html>

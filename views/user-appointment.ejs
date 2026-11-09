@@ -10,8 +10,16 @@
 <body>
     <%- include('./partials/navbar') %>
 
-    <p>my appointment </p>
+    <% if(user.role === 'doctor') {%>
+    <h1>My schedule</h1>
+    <% } else{%>
+    <h1>My appointments</h1>
+    <% } %>
     <% for (let oneAppointment of myAppointment) {%>
+    <% if(user.role === 'doctor') {%>
+    <p><%= oneAppointment.owner.username %></p>
+    <a href="/details/<%= oneAppointment._id %>">See details</a>
+    <% } else {%>
     <p><%= oneAppointment.doctorName.username %></p>
     <a href="/details/<%= oneAppointment._id %>">See details</a>
     <% } %>

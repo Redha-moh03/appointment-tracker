@@ -11,12 +11,21 @@
     <%- include('./partials/navbar') %>
 
     <p> appointment details </p>
+    <% if(user.role === 'doctoe') {%>
     <p><%= appointment.doctorName.username %></p>
+    <% } else {%>
+    <p><%= appointment.owner.username %></p>
     <p><%= appointment.department %></p>
+    <% } %>
     <p><%= appointment.startTime %></p>
-    <form action="/appointment/<%=appointment._id%>?_method=DELETE" method="post">
-        <button>Delete appointment</button>
+    <form action="/appointment/<%=appointment._id%>/cancel?_method=PUT" method="post">
+        <button>cancel appointment</button>
     </form>
+    <% if(user.role === 'doctor') {%>
+    <form action="//appointment/<%=appointment._id%>/complete?_method=PUT" method="post">
+        <button>Completed</button>
+    </form>
+    <% } %>
     <a href="/edit/<%=appointment._id%>">edit your appointment</a>
 </body>
 

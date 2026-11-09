@@ -12,7 +12,7 @@ router.get('/', isSignedIn, isPatient, async (req, res) => {
 
     if (!departmentId) {
         return res.render('book/book.ejs', {
-            departments: departments,
+            department: department,
             chosenDepartment: null,
             doctor: []
         })
@@ -40,27 +40,29 @@ router.post('/new', isSignedIn, isPatient, async (req, res) => {
     const startTime = new Date(req.body.date + ' ' + req.body.startTime)
     const isDoctor = await User.find({
         _id: req.body.doctor,
-        role: 'doctor'
+        role: 'doctor',
+        status: 'approved',
+        department: req.body.department
     })
-    if (isDoctor = 0) {
-        alert("choose a doctor")
-        res.redirect('/book')
+    if (startTime.getMinutes != 0 || startTime.getMinutes != 30) { return res.send("choose a viable time") }
+    if (isDoctor.length === 0) {
+        return res.send('you didnt choose a doctor')
     }
     const docAppoint = await Appointment.find({
-        doctorName: req.body.doctor
-        , startTime: startTime
+        doctorName: req.body.doctor,
+        startTime: startTime,
+        status: 'booked'
     })
     const patientAppoint = await Appointment.find({
         owner: req.session.user._id,
-        startTime: startTime
+        startTime: startTime,
+        status: "booked"
     })
     if (docAppoint.length > 0) {
-        alert("the doctor have an appointment at that time")
-        res.redirect('/book')
+        return res.send('doctor already has an appointment at that time')
     }
     else if (patientAppoint.length > 0) {
-        alert("You already have an appointment at that time")
-        res.redirect('/book')
+        return res.send('You already have an appointment at that time')
     }
     else {
         const newAppointment = await Appointment.create({
@@ -72,7 +74,7 @@ router.post('/new', isSignedIn, isPatient, async (req, res) => {
             owner: req.session.user._id,
             status: 'booked'
         })
-        res.redirect('/my-appointment')
+        return res.redirect('/my-appointment')
     }
 })
 

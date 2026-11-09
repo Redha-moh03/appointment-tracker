@@ -17,12 +17,14 @@
     <input type="password" name="password" id="password" />
     <label for="confirmPassword">Confirm Password:</label>
     <input type="password" name="confirmPassword" id="confirmPassword" />
+    <label for="role">doctor</label>
     <input required name="role" id="role" defult="false" value="doctor" type="radio" />
+    <label for="role">patient</label>
     <input required name="role" id="role" value="patient" type="radio">
     <label for="department">Choose a department</label>
     <select id="department" name="department">
       <% for(let oneDepartment of department) {%>
-      <option value="<%= oneDepartment.departmentName %>"><% oneDepartment.departmentName %></option>
+      <option value="<%= oneDepartment.departmentName %>"><%= oneDepartment.departmentName %></option>
       <% } %>
     </select>
     <button type="submit">Sign up</button>

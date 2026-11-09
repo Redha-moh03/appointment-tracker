@@ -7,8 +7,7 @@ const Department = require('../models/department.js')
 
 // Sign up routes
 router.get("/sign-up", async (req, res) => {
-  const department = await Department.find().populate('departmentName')
-  console.log(department)
+  const department = await Department.find()
   res.render("auth/sign-up.ejs", { department: department });
 });
 
@@ -32,22 +31,25 @@ router.post("/sign-up", async (req, res) => {
   if (req.body.role === 'admin') {
     return res.send("Cant do that")
   }
-  console.log(req.body.role)
-  console.log(req.body.department)
+  const roleId = await Department.find({ departmentName: req.body.department })
   if (req.body.role === 'doctor') {
     const user = await User.create({
       username: req.body.username,
       password: req.body.password,
       doctor: req.body.role,
-      department: req.body.department
+      department: roleId._id,
+      status: 'pending'
+    });
+  }
+  else {
+
+    const user = await User.create({
+      username: req.body.username,
+      password: req.body.password,
+      doctor: req.body.isDoctor
     });
   }
 
-  const user = await User.create({
-    username: req.body.username,
-    password: req.body.password,
-    doctor: req.body.isDoctor
-  });
   res.redirect("/auth/sign-in");
 });
 
@@ -67,7 +69,9 @@ router.post("/sign-in", async (req, res) => {
   if (!userInDatabase) {
     return res.send("Login failed. Please try again.");
   }
-
+  if (userInDatabase.status === 'pending' || userInDatabase.status === 'pending') {
+    return res.send('still not approved')
+  }
   // There is a user! Time to test their password with bcrypt
   const validPassword = bcrypt.compareSync(
     req.body.password,

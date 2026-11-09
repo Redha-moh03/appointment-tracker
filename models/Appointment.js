@@ -22,6 +22,7 @@ const appointmentSchema = new mongoose.Schema({
     department: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Department',
+        required: true,
     },
     doctorName: {
         type: mongoose.Schema.Types.ObjectId,

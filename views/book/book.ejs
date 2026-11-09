@@ -11,7 +11,7 @@
   <%- include('../partials/navbar') %>
 
   <h1> Book an appointment </h1>
-  <% if(!chosenDepartment) %>
+  <% if(!chosenDepartment) {%>
   <form action="/book" method="get">
     <label for="department">Choose a department</label>
     <select name="department" id="department" required>
@@ -23,9 +23,8 @@
   </form>
   <% } else {%>
   <p>Department:<%= chosenDepartment.departmentName %> <a href="/book">Change</a></p>
-  <% } %>
   <form action="/book/new" method="post">
-    <input type="hidden" name="department" id="department" value="<%= chosenDepartment._id %>">
+    <input type="hidden" name="department" value="<%= chosenDepartment._id %>">
 
     <label for="doctor">Doctor: </label>
     <select name="doctor" id="doctor">
@@ -39,6 +38,7 @@
     <input name="startTime" id="startTime" min="07:00" max="21:00" step="1800" type="time" />
     <button>Book an appointment</button>
   </form>
+  <% } %>
 </body>
 
 </html>

@@ -9,9 +9,19 @@ const appointmentSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    department: {
+    endTime: {
+        type: Date,
+        required: true
+    },
+    status: {
         type: String,
         required: true,
+        enum: ['cancelled', 'completed', 'booked'],
+        default: 'booked'
+    },
+    department: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Department',
     },
     doctorName: {
         type: mongoose.Schema.Types.ObjectId,

@@ -40,7 +40,6 @@ router.post("/sign-up", async (req, res) => {
     const user = await User.create({
       username: req.body.username,
       password: req.body.password,
-      doctor: req.body.role
     });
   }
 
@@ -63,7 +62,7 @@ router.post("/sign-in", async (req, res) => {
   if (!userInDatabase) {
     return res.send("Login failed. Please try again.");
   }
-  if (userInDatabase.status === 'pending' || userInDatabase.status === 'pending') {
+  if (userInDatabase.status === 'pending' || userInDatabase.status === 'rejected') {
     return res.send('still not approved')
   }
   // There is a user! Time to test their password with bcrypt

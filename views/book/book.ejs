@@ -11,14 +11,21 @@
   <%- include('../partials/navbar') %>
 
   <h1> Book an appointment </h1>
-  <form action="/book/new" method="post">
+  <% if(!chosenDepartment) %>
+  <form action="/book" method="get">
     <label for="department">Choose a department</label>
-    <select id="department" name="department">
-      <option value="dental">dental</option>
-      <option value="diabetes">diabetes</option>
-      <option value="physiotherapy">physiotherapy</option>
-      <option value="oncology">oncology</option>
+    <select name="department" id="department" required>
+      <% for(let oneDepartment of department) {%>
+      <option value="<%= oneDepartment._id %>"><%= oneDepartment.departmentName %></option>
+      <% } %>
     </select>
+    <button>Continue</button>
+  </form>
+  <% } else {%>
+  <p>Department:<%= chosenDepartment.departmentName %> <a href="/book">Change</a></p>
+  <% } %>
+  <form action="/book/new" method="post">
+    <input type="hidden" name="department" id="department" value="<%= chosenDepartment._id %>">
 
     <label for="doctor">Doctor: </label>
     <select name="doctor" id="doctor">

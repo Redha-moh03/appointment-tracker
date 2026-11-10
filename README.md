@@ -2,24 +2,14 @@
 
 ## Overview
 
-Appointment Tracker is a full-stack web app for booking and managing clinic appointments. It has three types of users:
-
-- **Patients** choose a department, pick one of its approved doctors, and book a 30-minute slot. They can reschedule, cancel, and review their doctor after a completed visit.
-- **Doctors** register for a department, wait for admin approval, then see their schedule and mark appointments as completed.
-- **Admins** approve or reject doctor registrations.
-  The app blocks double bookings: a patient can't hold two appointments at the same time, and a doctor can't be booked twice in the same slot.
+This is a medical appointment tracking website you can sing up as a ptient or as a doctor (you will wait for approval) than book an appointment or be booked for one.
+the user can change the time and the date of the appointment before its completed the patient will be able to review his doctor after his appointment is completed.
 
 ## Screenshots
-
-<!-- Replace each path with your own image -->
 
 **Home page**
 
 ![Home page](./screenshots/home.png)
-
-**Sign up / Sign in**
-
-![Sign up](./screenshots/sign-up.png)
 
 **Book an appointment**
 
@@ -28,10 +18,6 @@ Appointment Tracker is a full-stack web app for booking and managing clinic appo
 **My appointments**
 
 ![My appointments](./screenshots/my-appointments.png)
-
-**Appointment details**
-
-![Appointment details](./screenshots/details.png)
 
 **Reviews**
 
@@ -43,15 +29,13 @@ Appointment Tracker is a full-stack web app for booking and managing clinic appo
 
 ## Technologies Used
 
-- **Node.js** and **Express 5** (server and routing)
-- **MongoDB** with **Mongoose** (database and models)
-- **EJS** (server-side templates)
-- **express-session** and **connect-mongo** (sessions stored in MongoDB)
-- **bcrypt** (password hashing)
-- **method-override** (PUT requests from HTML forms)
-- **morgan** (request logging) and **dotenv** (environment variables)
+- **Node.js**
+- **Express**
+- **Mongoose**
+- **EJS**
+- **express-session** and **connect-mongo**
 - **HTML5** and **CSS3**
-- **draw.io** (database diagram)
+- **draw.io**
 
 ## Getting Started
 
@@ -203,32 +187,20 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Features
 
 - Role-based accounts: patient, doctor, and admin
-- Secure sign-in with hashed passwords and sessions stored in MongoDB
 - Admin approval before a doctor can sign in
-- Book by department, then doctor, date, and time
-- 30-minute slots on the hour or half hour
 - Double-booking protection for both patients and doctors
 - Reschedule or cancel an appointment
-- Doctors can complete appointments
 - Patients can review a doctor after a completed appointment
-- Public reviews page
-- Responsive design with a sticky navigation bar
 
 ## Future Enhancements
 
 - Let doctors edit their profile (bio, photo, working hours)
 - Show only the free time slots for each doctor
-- Email or SMS appointment reminders
 - Show each doctor's average rating on the booking page
 - Replace plain-text error messages with styled error pages and flash messages
 - Appointment status badges and filters (upcoming, past, cancelled)
-- Search and pagination for users and reviews
-- Extra security: CSRF protection, rate limiting, and `helmet`
-- Automated tests
 
 ## Credits
 
-- Built by Redha ([@Redha-moh03](https://github.com/Redha-moh03))
-- Fonts: [Bricolage Grotesque](https://fonts.google.com/specimen/Bricolage+Grotesque) and [Public Sans](https://fonts.google.com/specimen/Public+Sans) from Google Fonts
-- Database diagram made with [draw.io](https://www.drawio.com/)
-- Documentation: [Express](https://expressjs.com/), [Mongoose](https://mongoosejs.com/), [EJS](https://ejs.co/), and [MongoDB](https://www.mongodb.com/docs/)
+- stack overflow
+- W3Schools

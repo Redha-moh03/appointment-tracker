@@ -1,15 +1,6 @@
-/* ==========================================================================
-   Appointment Tracker — public/css/style.css
-   Works with your existing EJS markup (no classes needed).
-   Link it in every view's <head>:
-   <link rel="stylesheet" href="/css/style.css">
-   ========================================================================== */
-
 @import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Public+Sans:wght@400..700&display=swap");
 
-/* --------------------------------------------------------------------------
-   1. Tokens
-   -------------------------------------------------------------------------- */
+
 :root {
   --bg: #eef3f1;
   --surface: #ffffff;
@@ -27,14 +18,12 @@
 
   --radius: 0.6rem;
   --radius-lg: 0.9rem;
-  --measure: 46rem; /* width of the content column */
+  --measure: 46rem; 
 
   color-scheme: light;
 }
 
-/* --------------------------------------------------------------------------
-   2. Base
-   -------------------------------------------------------------------------- */
+
 *,
 *::before,
 *::after {
@@ -46,7 +35,6 @@ html {
 }
 
 body {
-  /* Content sits in a centred column; the nav stays full width. */
   --gutter: max(1.25rem, calc((100% - var(--measure)) / 2));
 
   margin: 0;
@@ -59,8 +47,7 @@ body {
   line-height: 1.55;
 }
 
-/* Everything directly inside <body> (except the nav) lines up in the column.
-   Only margin-inline is set here, so element rules below use margin-block. */
+
 body > :not(nav) {
   margin-inline: var(--gutter);
 }
@@ -75,9 +62,7 @@ body > :not(nav) {
   outline-offset: 2px;
 }
 
-/* --------------------------------------------------------------------------
-   3. Navigation bar
-   -------------------------------------------------------------------------- */
+
 nav {
   position: sticky;
   top: 0;
@@ -92,7 +77,6 @@ nav {
   border-bottom: 3px solid var(--accent);
 }
 
-/* Brand mark, drawn in CSS so the markup stays untouched */
 nav::before {
   content: "Appointment Tracker";
   margin-right: auto;
@@ -121,7 +105,6 @@ nav a:hover {
   color: #fff;
 }
 
-/* Reorder links without touching the HTML */
 nav a[href="/auth/sign-in"] {
   order: 1;
 }
@@ -151,9 +134,7 @@ nav a[href="/auth/sign-out"] {
   }
 }
 
-/* --------------------------------------------------------------------------
-   4. Typography
-   -------------------------------------------------------------------------- */
+
 h1,
 h2,
 h3 {
@@ -197,18 +178,13 @@ a:hover {
   text-decoration-thickness: 2px;
 }
 
-/* --------------------------------------------------------------------------
-   5. Page-level content (lists of appointments, reviews, users, details)
-   Your views output <p> + <a> pairs straight into <body>; these rules turn
-   them into clean rows.
-   -------------------------------------------------------------------------- */
+
 body > p {
   margin-block: 0;
   padding-block: 0.2rem;
   font-weight: 500;
 }
 
-/* A <p> that follows a link or a button form starts a new item */
 body > a + p,
 body > form + p {
   margin-top: 1.25rem;
@@ -216,7 +192,6 @@ body > form + p {
   border-top: 1px solid var(--line);
 }
 
-/* Links sitting directly in the page act as small outline buttons */
 body > a {
   display: block;
   width: fit-content;
@@ -235,9 +210,7 @@ body > a:hover {
   color: #fff;
 }
 
-/* --------------------------------------------------------------------------
-   6. Forms
-   -------------------------------------------------------------------------- */
+
 form:has(input, select, textarea) {
   max-width: 30rem;
   margin-block: 1.25rem 0;
@@ -248,7 +221,6 @@ form:has(input, select, textarea) {
   box-shadow: 0 1px 0 rgba(16, 39, 43, 0.04), 0 8px 24px -12px rgba(16, 39, 43, 0.18);
 }
 
-/* Forms that are only a button (cancel, complete, approve, reject) */
 form:not(:has(input, select, textarea)) {
   display: block;
   width: fit-content;
@@ -299,7 +271,6 @@ select:user-invalid {
   border-color: var(--danger);
 }
 
-/* Radio buttons (role picker on sign-up) sit inline next to their label */
 input[type="radio"] {
   width: auto;
   margin: 1.1rem 0.35rem 0 0;
@@ -315,9 +286,7 @@ input[type="radio"] + label {
   font-size: 1rem;
 }
 
-/* --------------------------------------------------------------------------
-   7. Buttons
-   -------------------------------------------------------------------------- */
+
 button,
 input[type="submit"] {
   padding: 0.65rem 1.25rem;
@@ -341,13 +310,11 @@ button:active {
   transform: translateY(1px);
 }
 
-/* Main submit button inside a card form: full width */
 form:has(input, select, textarea) button {
   width: 100%;
   margin-top: 1.5rem;
 }
 
-/* Destructive actions */
 form[action*="/cancel"] button,
 form[action*="/reject"] button {
   color: var(--danger);
@@ -362,7 +329,6 @@ form[action*="/reject"] button:hover {
   border-color: var(--danger);
 }
 
-/* Positive actions */
 form[action*="/complete"] button,
 form[action*="/approve"] button {
   background: var(--success);
@@ -375,27 +341,6 @@ form[action*="/approve"] button:hover {
   border-color: #17603c;
 }
 
-/* --------------------------------------------------------------------------
-   8. Optional helpers — use these if you later add a little markup
-   -------------------------------------------------------------------------- */
-
-/* Homepage hero:
-   <div class="hero"><h1>…</h1><p>…</p><a class="button" href="/book">Book now</a></div> */
-.hero {
-  margin-block: 3.5rem 2rem;
-}
-
-.hero h1 {
-  max-width: 16ch;
-  margin-top: 0;
-  font-size: clamp(2.4rem, 7vw, 4rem);
-}
-
-.hero p {
-  max-width: 34rem;
-  font-size: 1.2rem;
-  color: var(--ink-soft);
-}
 
 .button {
   display: inline-block;
@@ -413,7 +358,6 @@ form[action*="/approve"] button:hover {
   background: var(--brand-dark);
 }
 
-/* Wrap an appointment / review / user in a card */
 .card {
   margin-block: 1rem 0;
   padding: 1.25rem 1.5rem;
@@ -422,7 +366,6 @@ form[action*="/approve"] button:hover {
   border-radius: var(--radius-lg);
 }
 
-/* Status pills: <span class="badge booked">booked</span> */
 .badge {
   display: inline-block;
   padding: 0.15rem 0.7rem;
@@ -455,9 +398,6 @@ form[action*="/approve"] button:hover {
   color: #1d5a7a;
 }
 
-/* --------------------------------------------------------------------------
-   9. Small screens & motion preferences
-   -------------------------------------------------------------------------- */
 @media (max-width: 480px) {
   body {
     font-size: 1rem;

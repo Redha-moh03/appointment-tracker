@@ -1,0 +1,479 @@
+/* ==========================================================================
+   Appointment Tracker — public/css/style.css
+   Works with your existing EJS markup (no classes needed).
+   Link it in every view's <head>:
+   <link rel="stylesheet" href="/css/style.css">
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Public+Sans:wght@400..700&display=swap");
+
+/* --------------------------------------------------------------------------
+   1. Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  --bg: #eef3f1;
+  --surface: #ffffff;
+  --ink: #10272b;
+  --ink-soft: #4b6166;
+  --line: #d3dedb;
+  --brand: #0e5e5a;
+  --brand-dark: #0a3f3d;
+  --accent: #f2b134;
+  --danger: #b3392f;
+  --success: #1f7a4d;
+
+  --font-head: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+
+  --radius: 0.6rem;
+  --radius-lg: 0.9rem;
+  --measure: 46rem; /* width of the content column */
+
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   2. Base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  /* Content sits in a centred column; the nav stays full width. */
+  --gutter: max(1.25rem, calc((100% - var(--measure)) / 2));
+
+  margin: 0;
+  min-height: 100vh;
+  padding-bottom: 4rem;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+/* Everything directly inside <body> (except the nav) lines up in the column.
+   Only margin-inline is set here, so element rules below use margin-block. */
+body > :not(nav) {
+  margin-inline: var(--gutter);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Navigation bar
+   -------------------------------------------------------------------------- */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.4rem;
+  padding-block: 0.8rem;
+  padding-inline: var(--gutter);
+  background: var(--brand-dark);
+  border-bottom: 3px solid var(--accent);
+}
+
+/* Brand mark, drawn in CSS so the markup stays untouched */
+nav::before {
+  content: "Appointment Tracker";
+  margin-right: auto;
+  padding-left: 1.9rem;
+  font-family: var(--font-head);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23F2B134' d='M9 2h6v7h7v6h-7v7H9v-7H2V9h7z'/%3E%3C/svg%3E")
+    no-repeat left center / 1.35rem;
+}
+
+nav a {
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius);
+  color: #d7e9e6;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+nav a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+/* Reorder links without touching the HTML */
+nav a[href="/auth/sign-in"] {
+  order: 1;
+}
+nav a[href="/auth/sign-up"] {
+  order: 2;
+  background: var(--accent);
+  color: var(--ink);
+  font-weight: 600;
+}
+nav a[href="/auth/sign-up"]:hover {
+  background: #f7c561;
+  color: var(--ink);
+}
+nav a[href="/auth/sign-out"] {
+  order: 99;
+  margin-left: 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+@media (max-width: 640px) {
+  nav::before {
+    flex-basis: 100%;
+    margin-bottom: 0.35rem;
+  }
+  nav a[href="/auth/sign-out"] {
+    margin-left: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Typography
+   -------------------------------------------------------------------------- */
+h1,
+h2,
+h3 {
+  font-family: var(--font-head);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+h1 {
+  margin-block: 2.5rem 1.25rem;
+  font-size: clamp(1.9rem, 4.5vw, 2.7rem);
+  font-weight: 700;
+}
+
+h2 {
+  margin-block: 2rem 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+h3 {
+  margin-block: 1.5rem 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+p {
+  margin-block: 0 1rem;
+}
+
+a {
+  color: var(--brand);
+  font-weight: 500;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--brand-dark);
+  text-decoration-thickness: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   5. Page-level content (lists of appointments, reviews, users, details)
+   Your views output <p> + <a> pairs straight into <body>; these rules turn
+   them into clean rows.
+   -------------------------------------------------------------------------- */
+body > p {
+  margin-block: 0;
+  padding-block: 0.2rem;
+  font-weight: 500;
+}
+
+/* A <p> that follows a link or a button form starts a new item */
+body > a + p,
+body > form + p {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+/* Links sitting directly in the page act as small outline buttons */
+body > a {
+  display: block;
+  width: fit-content;
+  margin-block: 0.5rem 0;
+  padding: 0.45rem 0.95rem;
+  border: 1.5px solid var(--brand);
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+body > a:hover {
+  background: var(--brand);
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   6. Forms
+   -------------------------------------------------------------------------- */
+form:has(input, select, textarea) {
+  max-width: 30rem;
+  margin-block: 1.25rem 0;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 0 rgba(16, 39, 43, 0.04), 0 8px 24px -12px rgba(16, 39, 43, 0.18);
+}
+
+/* Forms that are only a button (cancel, complete, approve, reject) */
+form:not(:has(input, select, textarea)) {
+  display: block;
+  width: fit-content;
+  margin-block: 0.6rem 0;
+}
+
+label {
+  display: block;
+  margin-block: 1.1rem 0.35rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+form > label:first-child {
+  margin-top: 0;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  font: inherit;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid #b4c5c2;
+  border-radius: var(--radius);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: var(--brand);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(242, 177, 52, 0.55);
+}
+
+input:user-invalid,
+select:user-invalid {
+  border-color: var(--danger);
+}
+
+/* Radio buttons (role picker on sign-up) sit inline next to their label */
+input[type="radio"] {
+  width: auto;
+  margin: 1.1rem 0.35rem 0 0;
+  vertical-align: middle;
+  accent-color: var(--brand);
+}
+
+input[type="radio"] + label {
+  display: inline-block;
+  margin: 1.1rem 1.25rem 0 0;
+  vertical-align: middle;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   7. Buttons
+   -------------------------------------------------------------------------- */
+button,
+input[type="submit"] {
+  padding: 0.65rem 1.25rem;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: var(--brand);
+  border: 1.5px solid var(--brand);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Main submit button inside a card form: full width */
+form:has(input, select, textarea) button {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+/* Destructive actions */
+form[action*="/cancel"] button,
+form[action*="/reject"] button {
+  color: var(--danger);
+  background: transparent;
+  border-color: var(--danger);
+}
+
+form[action*="/cancel"] button:hover,
+form[action*="/reject"] button:hover {
+  color: #fff;
+  background: var(--danger);
+  border-color: var(--danger);
+}
+
+/* Positive actions */
+form[action*="/complete"] button,
+form[action*="/approve"] button {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+form[action*="/complete"] button:hover,
+form[action*="/approve"] button:hover {
+  background: #17603c;
+  border-color: #17603c;
+}
+
+/* --------------------------------------------------------------------------
+   8. Optional helpers — use these if you later add a little markup
+   -------------------------------------------------------------------------- */
+
+/* Homepage hero:
+   <div class="hero"><h1>…</h1><p>…</p><a class="button" href="/book">Book now</a></div> */
+.hero {
+  margin-block: 3.5rem 2rem;
+}
+
+.hero h1 {
+  max-width: 16ch;
+  margin-top: 0;
+  font-size: clamp(2.4rem, 7vw, 4rem);
+}
+
+.hero p {
+  max-width: 34rem;
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+}
+
+.button {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  color: #fff;
+  background: var(--brand);
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+.button:hover {
+  color: #fff;
+  background: var(--brand-dark);
+}
+
+/* Wrap an appointment / review / user in a card */
+.card {
+  margin-block: 1rem 0;
+  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+
+/* Status pills: <span class="badge booked">booked</span> */
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #e3ece9;
+  color: var(--ink-soft);
+}
+
+.badge.booked,
+.badge.approved {
+  background: #dcefe5;
+  color: var(--success);
+}
+
+.badge.cancelled,
+.badge.rejected {
+  background: #f6dfdc;
+  color: var(--danger);
+}
+
+.badge.pending {
+  background: #fbefcf;
+  color: #8a5d00;
+}
+
+.badge.completed {
+  background: #dbe9f0;
+  color: #1d5a7a;
+}
+
+/* --------------------------------------------------------------------------
+   9. Small screens & motion preferences
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  body {
+    font-size: 1rem;
+  }
+  form:has(input, select, textarea) {
+    padding: 1.15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+  button:active {
+    transform: none;
+  }
+}

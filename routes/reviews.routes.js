@@ -7,7 +7,7 @@ const Reviews = require('../models/Reviews')
 const isPatient = require("../middleware/is-patient")
 
 router.get('/new', isSignedIn, isPatient, async (req, res) => {
-    const doctor = await Appointment.findOne({
+    const doctor = await Appointment.find({
         status: "completed",
         owner: req.session.user._id
     }).populate('owner doctorName')

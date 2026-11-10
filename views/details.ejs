@@ -22,7 +22,7 @@
         <button>cancel appointment</button>
     </form>
     <% if(user.role === 'doctor') {%>
-    <form action="//appointment/<%=appointment._id%>/complete?_method=PUT" method="post">
+    <form action="/appointment/<%=appointment._id%>/complete?_method=PUT" method="post">
         <button>Completed</button>
     </form>
     <% } %>

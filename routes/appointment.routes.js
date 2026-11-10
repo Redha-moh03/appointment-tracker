@@ -44,7 +44,7 @@ router.post('/new', isSignedIn, isPatient, async (req, res) => {
         status: 'approved',
         department: req.body.department
     })
-    if (startTime.getMinutes != 0 || startTime.getMinutes != 30) { return res.send("choose a viable time") }
+    if (startTime.getMinutes() != 0 && startTime.getMinutes() != 30) { return res.send("choose a viable time") }
     if (isDoctor.length === 0) {
         return res.send('you didnt choose a doctor')
     }

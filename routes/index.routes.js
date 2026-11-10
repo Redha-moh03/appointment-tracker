@@ -39,7 +39,7 @@ router.get('/edit/:appointmentId', isSignedIn, async (req, res) => {
 })
 router.put('/edit/:appointmentId', isSignedIn, async (req, res) => {
     const startTime = new Date(req.body.date + ' ' + req.body.startTime)
-    if (startTime.getMinutes() != 0 || startTime.getMinutes() != 30) { return res.send("choose a viable time") }
+    if (startTime.getMinutes() != 0 && startTime.getMinutes() != 30) { return res.send("choose a viable time") }
     const doc = await Appointment.findById(req.params.appointmentId)
     const docAppoint = await Appointment.find({
         doctorName: doc.doctorName,

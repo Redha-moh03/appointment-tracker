@@ -21,7 +21,7 @@
         <label for="doctor">Doctor: </label>
         <select name="doctor" id="doctor">
             <% doctor.forEach(doctor => { %>
-            <option value="<%= doctor._id %>"><%= doctor.username %></option>
+            <option value="<%= doctor.doctorName._id %>"><%= doctor.doctorName.username %></option>
             <% }) %>
         </select>
         <button>Review</button>

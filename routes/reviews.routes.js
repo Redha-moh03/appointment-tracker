@@ -4,12 +4,28 @@ const Appointment = require('../models/Appointment')
 const Department = require('../models/department')
 const isSignedIn = require("../middleware/is-signed-in")
 const Reviews = require('../models/Reviews')
+const isPatient = require("../middleware/is-patient")
 
-router.get('/new', isSignedIn, async (req, res) => {
-    const doctor = await User.find({ role: 'doctor', status: 'approved' })
-    res.render('reviews/create.ejs', { doctor: doctor })
+router.get('/new', isSignedIn, isPatient, async (req, res) => {
+    const doctor = await Appointment.findOne({
+        status: "completed",
+        owner: req.session.user._id
+    }).populate('owner doctorName')
+    if (doctor) {
+        res.render('reviews/create.ejs', { doctor: doctor })
+    }
+    else {
+        return res.send("you cant review this doctor")
+    }
 })
-router.post('/new', isSignedIn, async (req, res) => {
+router.post('/new', isSignedIn, isPatient, async (req, res) => {
+    const doctor = await Appointment.findOne({
+        status: "completed",
+        owner: req.session.user._id
+    })
+    if (!doctor) {
+        return res.send("you cant review this doctor")
+    }
     const newRview = await Reviews.create({
         title: req.body.title,
         reviewBody: req.body.reviewBody,

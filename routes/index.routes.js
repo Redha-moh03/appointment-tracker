@@ -39,10 +39,10 @@ router.get('/edit/:appointmentId', isSignedIn, async (req, res) => {
 })
 router.put('/edit/:appointmentId', isSignedIn, async (req, res) => {
     const startTime = new Date(req.body.date + ' ' + req.body.startTime)
-    if (startTime.getMinutes != 0 || startTime.getMinutes != 30) { return res.send("choose a viable time") }
-
+    if (startTime.getMinutes() != 0 || startTime.getMinutes() != 30) { return res.send("choose a viable time") }
+    const doc = await Appointment.findById(req.params.appointmentId)
     const docAppoint = await Appointment.find({
-        doctorName: req.body.doctor,
+        doctorName: doc.doctorName,
         startTime: startTime,
         status: 'booked'
     })
@@ -58,11 +58,12 @@ router.put('/edit/:appointmentId', isSignedIn, async (req, res) => {
         return res.send('You already have an appointment at that time')
     }
     else {
-        const newAppointment = await Appointment.create({
+        const newAppointment = await Appointment.findByIdAndUpdate(req.params.appointmentId, {
             day: req.body.date,
             startTime: new Date(req.body.date + ' ' + req.body.startTime),
             endTime: new Date(startTime.getTime() + 1800000),
-        })
+        },
+            { new: true })
         return res.redirect('/my-appointment')
     }
 })

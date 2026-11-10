@@ -10,11 +10,11 @@
 
 <body>
     <%- include('../partials/navbar') %>
-    <p><%= review.title %></p>
-    <p><%= review.reviewBody %></p>
-    <p><%= review.rating %></p>
-    <p><%= review.owner.username %></p>
-    <p><%= review.doctorReviewed.username %></p>
+    <p>Review title : <%= review.title %></p>
+    <p>Review :<%= review.reviewBody %></p>
+    <p>rating :<%= review.rating %></p>
+    <p>Owner : <%= review.owner.username %></p>
+    <p>Doctor : <%= review.doctorReviewed.username %></p>
 </body>
 
 </html>

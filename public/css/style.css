@@ -417,3 +417,5 @@ form[action*="/approve"] button:hover {
     transform: none;
   }
 }
+nav { padding-inline: max(1.25rem, calc((100% - 64rem) / 2)); }
+form > label:first-of-type { margin-top: 0; }

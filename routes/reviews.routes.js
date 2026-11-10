@@ -11,7 +11,7 @@ router.get('/new', isSignedIn, isPatient, async (req, res) => {
         status: "completed",
         owner: req.session.user._id
     }).populate('owner doctorName')
-    if (doctor) {
+    if (doctor.length > 0) {
         res.render('reviews/create.ejs', { doctor: doctor })
     }
     else {
@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
     res.render('reviews/index.ejs', { reviews: reviews })
 })
 router.get('/:reviewId', isSignedIn, async (req, res) => {
-    const foundReview = await Reviews.findById(req.params.reviewId).populate('owner').populate('doctorReviewed')
+    const foundReview = await Reviews.findById(req.params.reviewId).populate('doctorReviewd owner')
     res.render('reviews/details.ejs', { review: foundReview })
 })
 module.exports = router;

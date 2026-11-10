@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
     res.render('reviews/index.ejs', { reviews: reviews })
 })
 router.get('/:reviewId', isSignedIn, async (req, res) => {
-    const foundReview = await Reviews.findById(req.params.reviewId).populate('doctorReviewd owner')
+    const foundReview = await Reviews.findById(req.params.reviewId).populate('doctorReviewed owner')
     res.render('reviews/details.ejs', { review: foundReview })
 })
 module.exports = router;

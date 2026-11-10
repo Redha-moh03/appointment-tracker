@@ -19,7 +19,6 @@ const reviewsSchema = new mongoose.Schema({
         required: true,
         min: 0,
         max: 10,
-        default: 10,
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,

@@ -115,48 +115,47 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ### User
 
-| Field      | Type     | Notes                                                                          |
-| ---------- | -------- | ------------------------------------------------------------------------------ |
-| username   | String   | Required, unique                                                               |
-| password   | String   | Required, stored as a bcrypt hash                                              |
-| role       | String   | `patient` (default), `doctor`, or `admin`                                      |
-| status     | String   | `approved` (default), `pending`, or `rejected`. New doctors start as `pending` |
-| department | ObjectId | Ref: Department. Doctors only                                                  |
+| Field      | Type     |
+| ---------- | -------- |
+| username   | String   |
+| password   | String   |
+| role       | String   |
+| status     | String   |
+| department | ObjectId |
 
 ### Department
 
-| Field          | Type   | Notes                       |
-| -------------- | ------ | --------------------------- |
-| departmentName | String | Required, max 40 characters |
+| Field          | Type   |
+| -------------- | ------ |
+| departmentName | String |
 
 ### Appointment
 
-| Field      | Type     | Notes                                           |
-| ---------- | -------- | ----------------------------------------------- |
-| day        | Date     | Required                                        |
-| startTime  | Date     | Required                                        |
-| endTime    | Date     | Required. Always 30 minutes after `startTime`   |
-| status     | String   | `booked` (default), `completed`, or `cancelled` |
-| department | ObjectId | Ref: Department                                 |
-| doctorName | ObjectId | Ref: User (the doctor)                          |
-| owner      | ObjectId | Ref: User (the patient)                         |
+| Field      | Type     |
+| ---------- | -------- |
+| day        | Date     |
+| startTime  | Date     |
+| endTime    | Date     |
+| status     | String   |
+| department | ObjectId |
+| doctorName | ObjectId |
+| owner      | ObjectId |
 
 ### Review
 
-| Field          | Type     | Notes                                |
-| -------------- | -------- | ------------------------------------ |
-| title          | String   | Required, 10 to 40 characters        |
-| reviewBody     | String   | Required, 10 to 500 characters       |
-| rating         | Number   | Required, 0 to 10                    |
-| owner          | ObjectId | Ref: User (the patient who wrote it) |
-| doctorReviewed | ObjectId | Ref: User (the doctor)               |
+| Field          | Type     |
+| -------------- | -------- |
+| title          | String   |
+| reviewBody     | String   |
+| rating         | Number   |
+| owner          | ObjectId |
+| doctorReviewed | ObjectId |
 
 ### Relationships
 
 - A **Department** has many doctors (**User**) and many **Appointments**.
 - A **User** (patient) has many **Appointments** and writes many **Reviews**.
 - A **User** (doctor) has many **Appointments** and receives many **Reviews**.
-  All models use Mongoose `timestamps` (`createdAt`, `updatedAt`).
 
 ## Routes
 
